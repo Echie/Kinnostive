@@ -19,5 +19,8 @@ OTHER_FILES += qml/JollaCC.qml \
     rpm/JollaCC.yaml \
     JollaCC.desktop \
     qml/pages/MenuPage.qml \
-    qml/pages/FinnkinoPage.qml
+    qml/pages/MoviesPage.qml \
+    qml/pages/FinnkinoPage.qml \
+    qml/pages/BluRayPage.qml \
+    qml/pages/FinnkinoSinglePage.qml
 

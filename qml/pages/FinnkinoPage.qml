@@ -34,156 +34,19 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtQuick.XmlListModel 2.0
-
 
 Page {
     id: searchPage
     property string searchString
+    property bool keepSearchFieldFocus
+    property string activeView: "list"
 
-    onSearchStringChanged: filmListModel.update()
-    Component.onCompleted: filmListModel.update()
-
-    XmlListModel {
-        id: events
-        source: "http://www.finnkino.fi/xml/Events/"
-        query: "/Events/Event"
-        namespaceDeclarations: "declare namespace Events = 'http://www.w3.org/2001/XMLSchema';"
-        XmlRole {
-            name: "Title"
-            query: "Title/string()"
-        }
-        XmlRole {
-            name: "RatingImageUrl"
-            query: "RatingImageUrl/string()"
-        }
-
-        onStatusChanged: {
-
-            if (status === XmlListModel.Ready) {
-
-                for(var index = 0; index < count;index++) {
-                    var newTitle = get(index).Title;
-                    filmListModel.append({"title":newTitle});
-                    filmListModel.allTitles.push(newTitle)
-                    filmListModel.filmCount += 1;
-                }
-            }
-        }
-
-    }
-
-    ListModel {
-        id: filmListModel
-        property var allTitles : new Array()
-        property string title
-        property int filmCount : 0
-
-        function update() {
-
-            var filteredFilms = allTitles.filter(function (film) { return film.toLowerCase().indexOf(searchString) !== -1 })
-
-            while (count > filteredFilms.length) {
-                remove(filteredFilms.length)
-            }
-
-            for (var index = 0; index < filteredFilms.length; index++) {
-                if (index < count) {
-                    setProperty(index, "title", filteredFilms[index])
-                } else {
-                    append({ "title": filteredFilms[index]})
-                }
-            }
-
-        }
-
-    }
-
-    Column {
-        id: headerContainer
-
-        width: searchPage.width
-
-        SearchField {
-            id: searchField
-            width: parent.width
-
-            Binding {
-                target: searchPage
-                property: "searchString"
-                value: searchField.text.toLowerCase().trim()
-            }
-
-        }
-    }
-
-
-    SilicaListView {
-        anchors.fill: parent
-        spacing: Theme.paddingLarge
-        model: filmListModel
-        currentIndex: -1
-        header: Item {
-            id: header
-            width: headerContainer.width
-            height: headerContainer.height
-            Component.onCompleted: headerContainer.parent = header
-        }
-
-        delegate: BackgroundItem {
-            id:backgroundItem
-
-            ListView.onAdd: AddAnimation {
-                target: backgroundItem
-            }
-            ListView.onRemove: RemoveAnimation {
-                target: backgroundItem
-            }
-
-            Label {
-                x: searchField.textLeftMargin
-                anchors.verticalCenter: parent.verticalCenter
-                color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
-                                               : (highlighted ? Theme.highlightColor : Theme.primaryColor)
-                textFormat: Text.StyledText
-                text: Theme.highlightText(model.title, searchString, Theme.highlightColor)
-            }
-        }
-        VerticalScrollDecorator {}
-
-    }
-}
-
-
-/*
-    SilicaListView {
-        anchors.fill: parent
-        spacing: Theme.paddingLarge
-        model: events
-        delegate: ListItem {
-            Row {
-                Image {
-                    height: Theme.itemSizeLarge
-                    width: Theme.itemSizeLarge
-                    source: "https://media.finnkino.fi/images/rating_large_16.png"
-                }
-
-                Column {
-                    Label {
-                        text: model.Title
-                    }
-                }
-            }
-        }
-    }
-}
-*/
-
-
-/*
+    onSearchStringChanged: listModel.update()
+    Component.onCompleted: listModel.update()
 
     Loader {
         anchors.fill: parent
+        sourceComponent: activeView == "list" ? listViewComponent : gridViewComponent
     }
 
     Column {
@@ -192,7 +55,7 @@ Page {
         width: searchPage.width
 
         PageHeader {
-            title: "Films"
+            title: "Countries"
         }
 
         SearchField {
@@ -208,69 +71,72 @@ Page {
     }
 
 
-    SilicaListView {
-        id: ourListView
-        model: events
-        anchors.fill: parent
-        currentIndex: -1 // otherwise currentItem will steal focus
-        header:  Item {
-            id: header
-            width: headerContainer.width
-            height: headerContainer.height
-            Component.onCompleted: headerContainer.parent = header
-        }
-
-        delegate: BackgroundItem {
-            id: backgroundItem
-
-            ListView.onAdd: AddAnimation {
-                target: backgroundItem
-            }
-            ListView.onRemove: RemoveAnimation {
-                target: backgroundItem
+    Component {
+        id: listViewComponent
+        SilicaListView {
+            model: listModel
+            anchors.fill: parent
+            currentIndex: -1 // otherwise currentItem will steal focus
+            header:  Item {
+                id: header
+                width: headerContainer.width
+                height: headerContainer.height
+                Component.onCompleted: headerContainer.parent = header
             }
 
-            Label {
-                x: searchField.textLeftMargin
-                anchors.verticalCenter: parent.verticalCenter
-                color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
-                                               : (highlighted ? Theme.highlightColor : Theme.primaryColor)
-                textFormat: Text.StyledText
-                text: Theme.highlightText(model.text, searchString, Theme.highlightColor)
-            }
-        }
+            delegate: BackgroundItem {
+                id: backgroundItem
 
-        VerticalScrollDecorator {}
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("MoviesPage.qml"))
+                }
 
-        Component.onCompleted: {
-            if (keepSearchFieldFocus) {
-                searchField.forceActiveFocus()
+                ListView.onAdd: AddAnimation {
+                    target: backgroundItem
+                }
+                ListView.onRemove: RemoveAnimation {
+                    target: backgroundItem
+                }
+
+                Label {
+                    x: searchField.textLeftMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
+                                                   : (highlighted ? Theme.highlightColor : Theme.primaryColor)
+                    textFormat: Text.StyledText
+                    text: Theme.highlightText(model.text, searchString, Theme.highlightColor)
+                }
             }
-            keepSearchFieldFocus = false
+
+            VerticalScrollDecorator {}
+
+            Component.onCompleted: {
+                if (keepSearchFieldFocus) {
+                    searchField.forceActiveFocus()
+                }
+                keepSearchFieldFocus = false
+            }
         }
     }
 
     ListModel {
         id: listModel
 
-        property variant films: ["penus"]
+        property variant cities: ["Espoo", "Helsinki", "Jyväskylä",
+            "Kuopio", "Lahti", "Oulu", "Pori", "Tampere", "Turku", "Vantaa"]
 
         function update() {
-
-            var filteredFilms = films.filter(function (film) { return film.toLowerCase().indexOf(searchString) !== -1 })
-
-            while (count > filteredFilms.length) {
-                remove(filteredFilms.length)
+            var filteredCities = cities.filter(function (city) { return city.toLowerCase().indexOf(searchString) !== -1 })
+            while (count > filteredCities.length) {
+                remove(filteredCities.length)
             }
-
-            for (var index = 0; index < filteredFilms.length; index++) {
+            for (var index = 0; index < filteredCities.length; index++) {
                 if (index < count) {
-                    setProperty(index, "text", filteredFilms[index])
+                    setProperty(index, "text", filteredCities[index])
                 } else {
-                    append({ "text": filteredFilms[index]})
+                    append({ "text": filteredCities[index]})
                 }
             }
         }
     }
 }
-*/

@@ -57,7 +57,7 @@ Page {
                 name: "Netflix"
             }
             ListElement {
-                name: "Bluray?"
+                name: "BluRay"
             }
 
         }
