@@ -40,10 +40,9 @@ import QtQuick.XmlListModel 2.0
 Page {
     id: searchPage
     property string searchString
-    property bool keepSearchFieldFocus
 
-    onSearchStringChanged: listModel.update()
-    Component.onCompleted: listModel.update()
+    onSearchStringChanged: filmListModel.update()
+    Component.onCompleted: filmListModel.update()
 
     XmlListModel {
         id: events
@@ -59,8 +58,104 @@ Page {
             query: "RatingImageUrl/string()"
         }
 
+        onStatusChanged: {
+
+            if (status === XmlListModel.Ready) {
+
+                for(var index = 0; index < count;index++) {
+                    var newTitle = get(index).Title;
+                    filmListModel.append({"title":newTitle});
+                    filmListModel.allTitles.push(newTitle)
+                    filmListModel.filmCount += 1;
+                }
+            }
+        }
+
     }
 
+    ListModel {
+        id: filmListModel
+        property var allTitles : new Array()
+        property string title
+        property int filmCount : 0
+
+        function update() {
+
+            var filteredFilms = allTitles.filter(function (film) { return film.toLowerCase().indexOf(searchString) !== -1 })
+
+            while (count > filteredFilms.length) {
+                remove(filteredFilms.length)
+            }
+
+            for (var index = 0; index < filteredFilms.length; index++) {
+                if (index < count) {
+                    setProperty(index, "title", filteredFilms[index])
+                } else {
+                    append({ "title": filteredFilms[index]})
+                }
+            }
+
+        }
+
+    }
+
+    Column {
+        id: headerContainer
+
+        width: searchPage.width
+
+        SearchField {
+            id: searchField
+            width: parent.width
+
+            Binding {
+                target: searchPage
+                property: "searchString"
+                value: searchField.text.toLowerCase().trim()
+            }
+
+        }
+    }
+
+
+    SilicaListView {
+        anchors.fill: parent
+        spacing: Theme.paddingLarge
+        model: filmListModel
+        currentIndex: -1
+        header: Item {
+            id: header
+            width: headerContainer.width
+            height: headerContainer.height
+            Component.onCompleted: headerContainer.parent = header
+        }
+
+        delegate: BackgroundItem {
+            id:backgroundItem
+
+            ListView.onAdd: AddAnimation {
+                target: backgroundItem
+            }
+            ListView.onRemove: RemoveAnimation {
+                target: backgroundItem
+            }
+
+            Label {
+                x: searchField.textLeftMargin
+                anchors.verticalCenter: parent.verticalCenter
+                color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
+                                               : (highlighted ? Theme.highlightColor : Theme.primaryColor)
+                textFormat: Text.StyledText
+                text: Theme.highlightText(model.title, searchString, Theme.highlightColor)
+            }
+        }
+        VerticalScrollDecorator {}
+
+    }
+}
+
+
+/*
     SilicaListView {
         anchors.fill: parent
         spacing: Theme.paddingLarge
@@ -82,7 +177,7 @@ Page {
         }
     }
 }
-
+*/
 
 
 /*
