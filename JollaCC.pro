@@ -18,5 +18,6 @@ OTHER_FILES += qml/JollaCC.qml \
     qml/pages/SecondPage.qml \
     rpm/JollaCC.spec \
     rpm/JollaCC.yaml \
-    JollaCC.desktop
+    JollaCC.desktop \
+    qml/pages/SearchPage.qml
 

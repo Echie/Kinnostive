@@ -45,6 +45,10 @@ Page {
                 text: "Show Page 2"
                 onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
             }
+            MenuItem {
+                text: "Show Search Page"
+                onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))
+            }
         }
 
         // Tell SilicaFlickable the height of its content.
