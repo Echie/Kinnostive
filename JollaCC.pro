@@ -14,10 +14,10 @@ SOURCES += src/JollaCC.cpp
 
 OTHER_FILES += qml/JollaCC.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
     qml/pages/SecondPage.qml \
     rpm/JollaCC.spec \
     rpm/JollaCC.yaml \
     JollaCC.desktop \
-    qml/pages/SearchPage.qml
+    qml/pages/MenuPage.qml \
+    qml/pages/FinnkinoPage.qml
 
