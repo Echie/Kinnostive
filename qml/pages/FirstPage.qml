@@ -62,7 +62,7 @@ Page {
             }
             Label {
                 x: Theme.paddingLarge
-                text: "Hello Sailors"
+                text: "Hello Homot 8D Ja kusi"
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeExtraLarge
             }
