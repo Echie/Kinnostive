@@ -70,25 +70,18 @@ Page {
                     var newTitle = get(index).Title;
                     var newID = get(index).ID;
 
-                    //console.log(newTitle, newID)
                     allFilmsModel.append({"title":newTitle,"id":newID});
 
-                    //filmListModel.append({"title":newTitle,"id":newID});
-                    //filmListModel.allTitles.push(newTitle)
-                    //filmListModel.allIDs.push(newID)
-                    //filmListModel.filmCount += 1;
                 }
                 updateFilmList()
             }
         }
     }
 
-    ListModel {
-        id:allFilmsModel
+    // Contains all movies
+    ListModel { id:allFilmsModel }
 
-
-        }
-
+    // Contains filtered movies to be shown on screen
     ListModel {
         id: filmListModel
         //property var allTitles : new Array()
@@ -118,26 +111,21 @@ Page {
 
     function updateFilmList() {
         filmListModel.clear()
-        //filmListModel.append({"title":"Penus the movie","id":"69"})
 
         for(var index = 0; index < allFilmsModel.count; index++) {
-
-
-            //console.log(allFilmsModel.get(index).title,allFilmsModel.get(index).id)
-
-
 
             var newTitle = allFilmsModel.get(index).title
             var newID = allFilmsModel.get(index).id
 
             if (newTitle.toLowerCase().indexOf(searchString)  !== -1  ) {
                 filmListModel.append({"title":newTitle,"id":newID})
-
             }
-            console.log(filmListModel.get(index).title,filmListModel.get(index).id)
-
         }
 
+        /* DEBUG
+        for (var ind = 0; ind <filmListModel.count; ind++) {
+            console.log(filmListModel.get(ind).title,filmListModel.get(ind).id)
+        }*/
     }
 
 
