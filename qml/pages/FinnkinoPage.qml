@@ -83,28 +83,34 @@ Page {
         }
     }
 
-    Column {
-        id: headerContainer
-
-        width: cityPage.width
-
-        PageHeader {
-            title: "Choose a City"
-        }
-    }
-
     SilicaListView {
+
+        PullDownMenu {
+            MenuItem {
+                text: "Netflix"
+                onClicked: {
+                    pageStack.clear()
+                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
+                    pageStack.push(Qt.resolvedUrl("NetflixPage.qml"))
+                    console.log("Clicked pulldown Netflix")
+                }
+            }
+            MenuItem {
+                text: "Bluray"
+                onClicked: {
+                    pageStack.clear()
+                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
+                    pageStack.push(Qt.resolvedUrl("BluRayPage.qml"))
+                    console.log("Clicked pulldown Bluray")
+                }
+            }
+        }
+
         model: allCityModel
         anchors.fill: parent
-        //currentIndex: -1 // otherwise currentItem will steal focus
-        header:  Item {
-            id: header
-            width: headerContainer.width
-            height: headerContainer.height
-            Component.onCompleted: headerContainer.parent = header
-        }
+        header: PageHeader { title: "Choose a City" }
 
-        delegate: BackgroundItem {
+        delegate: ListItem {
             id: backgroundItem
 
             onClicked: {
@@ -112,29 +118,12 @@ Page {
                                {message:'http://www.finnkino.fi/xml/Events/?area='+model.ID})
             }
 
-            ListView.onAdd: AddAnimation {
-                target: backgroundItem
-            }
-            ListView.onRemove: RemoveAnimation {
-                target: backgroundItem
-            }
-
             Label {
-                text: model.Name
-            }
-
-            /*
-            Label {
-                x: searchField.textLeftMargin
+                x: Theme.paddingLarge
+                text: Name
                 anchors.verticalCenter: parent.verticalCenter
-                color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
-                                               : (highlighted ? Theme.highlightColor : Theme.primaryColor)
-                textFormat: Text.StyledText
-                text: Theme.highlightText(model.Name, searchString, Theme.highlightColor)
-            }*/
+            }
         }
-
         VerticalScrollDecorator {}
-
     }
 }
