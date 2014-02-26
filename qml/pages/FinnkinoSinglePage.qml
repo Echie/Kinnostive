@@ -28,16 +28,21 @@ Page {
         onStatusChanged: {
 
             if (status === XmlListModel.Ready) {
-                console.log("inside onStatusChanged")
+                console.log("inside FinnkinoSinglePage")
                 console.log(get(0).Title)
             }
         }
     }
     SilicaListView {
 
+        id: ourListView
         anchors.fill: parent
         spacing: Theme.paddingLarge
         model: singleEvents
+
+        header: PageHeader {
+            title: "Film"
+        }
 
         delegate: ListItem {
 
