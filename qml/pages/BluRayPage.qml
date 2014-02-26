@@ -15,20 +15,41 @@ Page {
     }
 
     SilicaListView {
+
+        PullDownMenu {
+            MenuItem {
+                text: "Finnkino"
+                onClicked: {
+                    pageStack.clear()
+                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
+                    pageStack.push(Qt.resolvedUrl("FinnkinoPage.qml"))
+                    console.log("Clicked pulldown Finnkino")
+                }
+            }
+            MenuItem {
+                text: "Netflix"
+                onClicked: {
+                    pageStack.clear()
+                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
+                    pageStack.push(Qt.resolvedUrl("NetflixPage.qml"))
+                    console.log("Clicked pulldown Netflix")
+                }
+            }
+        }
+
+        header: PageHeader { title: "Bluray releases" }
         anchors.fill: parent
-        spacing: Theme.paddingLarge
         model: bluray
+
         delegate: ListItem {
             onClicked: {
                 pageStack.push(Qt.resolvedUrl("NetflixSinglePage.qml"),
                                {message: model.Title})
             }
-            Row {
-                Column {
-                    Label {
-                        text: model.Title
-                    }
-                }
+            Label {
+                x: Theme.paddingLarge
+                text: model.Title
+                anchors.verticalCenter: parent.verticalCenter
             }
         }
     }

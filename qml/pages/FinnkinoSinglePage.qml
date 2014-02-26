@@ -35,6 +35,27 @@ Page {
     }
     SilicaListView {
 
+        PullDownMenu {
+            MenuItem {
+                text: "Netflix"
+                onClicked: {
+                    pageStack.clear()
+                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
+                    pageStack.push(Qt.resolvedUrl("NetflixPage.qml"))
+                    console.log("Clicked pulldown Netflix")
+                }
+            }
+            MenuItem {
+                text: "Bluray"
+                onClicked: {
+                    pageStack.clear()
+                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
+                    pageStack.push(Qt.resolvedUrl("BluRayPage.qml"))
+                    console.log("Clicked pulldown Bluray")
+                }
+            }
+        }
+
         id: ourListView
         anchors.fill: parent
         spacing: Theme.paddingLarge
