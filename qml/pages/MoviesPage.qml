@@ -41,8 +41,8 @@ Page {
     id: moviePage
     property string searchString
 
-    onSearchStringChanged: filmListModel.update()
-    Component.onCompleted: filmListModel.update()
+    onSearchStringChanged: updateFilmList()
+    //Component.onCompleted: updateFilmList()
 
     XmlListModel {
         id: events
@@ -69,98 +69,133 @@ Page {
                 for(var index = 0; index < count;index++) {
                     var newTitle = get(index).Title;
                     var newID = get(index).ID;
-                    filmListModel.append({"title":newTitle,"id":newID});
-                    filmListModel.allTitles.push(newTitle)
-                    filmListModel.filmCount += 1;
+
+                    //console.log(newTitle, newID)
+                    allFilmsModel.append({"title":newTitle,"id":newID});
+
+                    //filmListModel.append({"title":newTitle,"id":newID});
+                    //filmListModel.allTitles.push(newTitle)
+                    //filmListModel.allIDs.push(newID)
+                    //filmListModel.filmCount += 1;
                 }
+                updateFilmList()
             }
         }
-
     }
 
     ListModel {
+        id:allFilmsModel
+
+
+        }
+
+    ListModel {
         id: filmListModel
-        property var allTitles : new Array()
-        property string title
-        property string id
-        property int filmCount : 0
+        //property var allTitles : new Array()
+        //property var allIDs : new Array()
+        //property string title
+        //property string id
+        //property int filmCount : 0
 
-        function update() {
+        /*
+    function update() {
 
-            var filteredFilms = allTitles.filter(function (film) { return film.toLowerCase().indexOf(searchString) !== -1 })
+        var filteredFilms = allTitles.filter(function (film) { return film.toLowerCase().indexOf(searchString) !== -1 })
 
-            while (count > filteredFilms.length) {
-                remove(filteredFilms.length)
+        while (count > filteredFilms.length) {
+            remove(filteredFilms.length)
+        }
+
+        for (var index = 0; index < filteredFilms.length; index++) {
+            if (index < count) {
+                setProperty(index, "title", filteredFilms[index])
+            } else {
+                append({ "title": filteredFilms[index]})
             }
+        }
+    }*/
+    }
 
-            for (var index = 0; index < filteredFilms.length; index++) {
-                if (index < count) {
-                    setProperty(index, "title", filteredFilms[index])
-                } else {
-                    append({ "title": filteredFilms[index]})
+    function updateFilmList() {
+        filmListModel.clear()
+        //filmListModel.append({"title":"Penus the movie","id":"69"})
+
+        for(var index = 0; index < allFilmsModel.count; index++) {
+
+
+            //console.log(allFilmsModel.get(index).title,allFilmsModel.get(index).id)
+
+
+
+            var newTitle = allFilmsModel.get(index).title
+            var newID = allFilmsModel.get(index).id
+
+            if (newTitle.toLowerCase().indexOf(searchString)  !== -1  ) {
+                filmListModel.append({"title":newTitle,"id":newID})
+
+            }
+            console.log(filmListModel.get(index).title,filmListModel.get(index).id)
+
+        }
+
+    }
+
+
+        Column {
+            id: headerContainer
+
+            width: moviePage.width
+
+            SearchField {
+                id: searchField
+                width: parent.width
+
+                Binding {
+                    target: moviePage
+                    property: "searchString"
+                    value: searchField.text.toLowerCase().trim()
                 }
             }
-
         }
 
+
+        SilicaListView {
+            anchors.fill: parent
+            spacing: Theme.paddingLarge
+            model: filmListModel
+            currentIndex: -1
+            header: Item {
+                id: header
+                width: headerContainer.width
+                height: headerContainer.height
+                Component.onCompleted: headerContainer.parent = header
+            }
+
+            delegate: BackgroundItem {
+                id:backgroundItem
+
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("FinnkinoSinglePage.qml"),
+                                   {message:'http://www.finnkino.fi/xml/Events/?eventID='+model.id})
+                }
+
+                ListView.onAdd: AddAnimation {
+                    target: backgroundItem
+                }
+                ListView.onRemove: RemoveAnimation {
+                    target: backgroundItem
+                }
+
+                Label {
+                    x: searchField.textLeftMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
+                                                   : (highlighted ? Theme.highlightColor : Theme.primaryColor)
+                    textFormat: Text.StyledText
+                    text: Theme.highlightText(model.title, searchString, Theme.highlightColor)
+                }
+            }
+            VerticalScrollDecorator {}
+
+        }
     }
-
-    Column {
-        id: headerContainer
-
-        width: moviePage.width
-
-        SearchField {
-            id: searchField
-            width: parent.width
-
-            Binding {
-                target: moviePage
-                property: "searchString"
-                value: searchField.text.toLowerCase().trim()
-            }
-
-        }
-    }
-
-
-    SilicaListView {
-        anchors.fill: parent
-        spacing: Theme.paddingLarge
-        model: filmListModel
-        currentIndex: -1
-        header: Item {
-            id: header
-            width: headerContainer.width
-            height: headerContainer.height
-            Component.onCompleted: headerContainer.parent = header
-        }
-
-        delegate: BackgroundItem {
-            id:backgroundItem
-
-            onClicked: {
-                pageStack.push(Qt.resolvedUrl("FinnkinoSinglePage.qml"),
-                               {message:'http://www.finnkino.fi/xml/Events/?eventID='+model.id})
-            }
-
-            ListView.onAdd: AddAnimation {
-                target: backgroundItem
-            }
-            ListView.onRemove: RemoveAnimation {
-                target: backgroundItem
-            }
-
-            Label {
-                x: searchField.textLeftMargin
-                anchors.verticalCenter: parent.verticalCenter
-                color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
-                                               : (highlighted ? Theme.highlightColor : Theme.primaryColor)
-                textFormat: Text.StyledText
-                text: Theme.highlightText(model.title, searchString, Theme.highlightColor)
-            }
-        }
-        VerticalScrollDecorator {}
-
-    }
-}
