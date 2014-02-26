@@ -22,5 +22,7 @@ OTHER_FILES += qml/JollaCC.qml \
     qml/pages/MoviesPage.qml \
     qml/pages/FinnkinoPage.qml \
     qml/pages/BluRayPage.qml \
-    qml/pages/FinnkinoSinglePage.qml
+    qml/pages/FinnkinoSinglePage.qml \
+    qml/pages/NetflixPage.qml \
+    qml/pages/NetflixSinglePage.qml
 

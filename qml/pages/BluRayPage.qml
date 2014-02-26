@@ -19,9 +19,11 @@ Page {
         spacing: Theme.paddingLarge
         model: bluray
         delegate: ListItem {
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("NetflixSinglePage.qml"),
+                               {message: model.Title})
+            }
             Row {
-
-
                 Column {
                     Label {
                         text: model.Title
@@ -33,7 +35,7 @@ Page {
 
     //http://qt-project.org/forums/viewthread/5743
     function parse() {
-       bluray.clear();
+        bluray.clear();
         var xhr = new XMLHttpRequest();
         xhr.open('GET','http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=93u36yvaapta4kaur425e8nq&page_limit=2',true);
         xhr.onreadystatechange = function() {
@@ -51,7 +53,7 @@ Page {
     function loaded(jsonObject){
         for ( var index in jsonObject.movies ){
             bluray.append({ 'Title' : jsonObject.movies[index].title});
-         }
+        }
 
 
     }
