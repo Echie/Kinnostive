@@ -47,7 +47,7 @@ Page {
 
     XmlListModel {
         id: events
-        source: message//"http://www.finnkino.fi/xml/Events/"
+        source: 'http://www.finnkino.fi/xml/Events/?area='+message
         query: "/Events/Event"
         namespaceDeclarations: "declare namespace Events = 'http://www.w3.org/2001/XMLSchema';"
         XmlRole {
@@ -66,8 +66,8 @@ Page {
         onStatusChanged: {
 
             if (status === XmlListModel.Ready) {
-                console.log("inside MoviesPage:")
-                console.log(message)
+               // console.log("inside MoviesPage:")
+               // console.log(message)
 
                 for(var index = 0; index < count;index++) {
                     var newTitle = get(index).Title;
@@ -166,8 +166,9 @@ Page {
                 id:backgroundItem
 
                 onClicked: {
+
                     pageStack.push(Qt.resolvedUrl("FinnkinoSinglePage.qml"),
-                                   {message:'http://www.finnkino.fi/xml/Events/?eventID='+model.id})
+                                   {areaID:message, eventID:model.id})
                 }
 
                 ListView.onAdd: AddAnimation {

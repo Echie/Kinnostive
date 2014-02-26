@@ -109,7 +109,7 @@ Page {
 
             onClicked: {
                 pageStack.push(Qt.resolvedUrl("MoviesPage.qml"),
-                               {message:'http://www.finnkino.fi/xml/Events/?area='+model.ID})
+                               {message:model.ID})
             }
 
             ListView.onAdd: AddAnimation {
