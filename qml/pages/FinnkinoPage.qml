@@ -36,107 +36,105 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
-    id: searchPage
-    property string searchString
-    property bool keepSearchFieldFocus
-    property string activeView: "list"
+    id: cityPage
 
-    onSearchStringChanged: listModel.update()
-    Component.onCompleted: listModel.update()
+    ListModel {
+        id: allCityModel
 
-    Loader {
-        anchors.fill: parent
-        sourceComponent: activeView == "list" ? listViewComponent : gridViewComponent
+        ListElement {
+            Name: "Espoo"
+            ID: "1012"
+        }
+        ListElement {
+            Name: "Helsinki"
+            ID: "1002"
+        }
+        ListElement {
+            Name: "Jyväskylä"
+            ID: "1015"
+        }
+        ListElement {
+            Name: "Kuopio"
+            ID: "1016"
+        }
+        ListElement {
+            Name: "Lahti"
+            ID: "1017"
+        }
+        ListElement {
+            Name: "Oulu"
+            ID: "1018"
+        }
+        ListElement {
+            Name: "Pori"
+            ID: "1019"
+        }
+        ListElement {
+            Name: "Tampere"
+            ID: "1021"
+        }
+        ListElement {
+            Name: "Turku"
+            ID: "1022"
+        }
+        ListElement {
+            Name: "Vantaa"
+            ID: "1013"
+        }
     }
 
     Column {
         id: headerContainer
 
-        width: searchPage.width
+        width: cityPage.width
 
         PageHeader {
-            title: "Cities"
-        }
-
-        SearchField {
-            id: searchField
-            width: parent.width
-
-            Binding {
-                target: searchPage
-                property: "searchString"
-                value: searchField.text.toLowerCase().trim()
-            }
+            title: "Choose a City"
         }
     }
 
-
-    Component {
-        id: listViewComponent
-        SilicaListView {
-            model: listModel
-            anchors.fill: parent
-            currentIndex: -1 // otherwise currentItem will steal focus
-            header:  Item {
-                id: header
-                width: headerContainer.width
-                height: headerContainer.height
-                Component.onCompleted: headerContainer.parent = header
-            }
-
-            delegate: BackgroundItem {
-                id: backgroundItem
-
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("MoviesPage.qml"))
-                }
-
-                ListView.onAdd: AddAnimation {
-                    target: backgroundItem
-                }
-                ListView.onRemove: RemoveAnimation {
-                    target: backgroundItem
-                }
-
-                Label {
-                    x: searchField.textLeftMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
-                                                   : (highlighted ? Theme.highlightColor : Theme.primaryColor)
-                    textFormat: Text.StyledText
-                    text: Theme.highlightText(model.text, searchString, Theme.highlightColor)
-                }
-            }
-
-            VerticalScrollDecorator {}
-
-            Component.onCompleted: {
-                if (keepSearchFieldFocus) {
-                    searchField.forceActiveFocus()
-                }
-                keepSearchFieldFocus = false
-            }
+    SilicaListView {
+        model: allCityModel
+        anchors.fill: parent
+        //currentIndex: -1 // otherwise currentItem will steal focus
+        header:  Item {
+            id: header
+            width: headerContainer.width
+            height: headerContainer.height
+            Component.onCompleted: headerContainer.parent = header
         }
-    }
 
-    ListModel {
-        id: listModel
+        delegate: BackgroundItem {
+            id: backgroundItem
 
-        property variant cities: ["Espoo", "Helsinki", "Jyväskylä",
-            "Kuopio", "Lahti", "Oulu", "Pori", "Tampere", "Turku", "Vantaa"]
-
-        function update() {
-            var filteredCities = cities.filter(function (city) { return city.toLowerCase().indexOf(searchString) !== -1 })
-            while (count > filteredCities.length) {
-                remove(filteredCities.length)
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("MoviesPage.qml"),
+                               {message:'http://www.finnkino.fi/xml/Events/?area='+model.ID})
             }
-            for (var index = 0; index < filteredCities.length; index++) {
-                if (index < count) {
-                    setProperty(index, "text", filteredCities[index])
-                } else {
-                    append({ "text": filteredCities[index]})
-                }
+
+            ListView.onAdd: AddAnimation {
+                target: backgroundItem
             }
+            ListView.onRemove: RemoveAnimation {
+                target: backgroundItem
+            }
+
+            Label {
+                text: model.Name
+            }
+
+            /*
+            Label {
+                x: searchField.textLeftMargin
+                anchors.verticalCenter: parent.verticalCenter
+                color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
+                                               : (highlighted ? Theme.highlightColor : Theme.primaryColor)
+                textFormat: Text.StyledText
+                text: Theme.highlightText(model.Name, searchString, Theme.highlightColor)
+            }*/
         }
+
+        VerticalScrollDecorator {}
+
     }
 }
