@@ -48,6 +48,7 @@ Page {
     SilicaListView {
 
         id: ourlistView
+        header: PageHeader { title: "Main Menu" }
         anchors.fill: parent
         model: ListModel {
             ListElement {
@@ -64,11 +65,6 @@ Page {
 
         delegate: ListItem {
             id: defaultListItem
-            //menu: contextMenuComponent
-            function remove() {
-                remorseAction("Deleting", function() { listModel.remove(index) })
-            }
-            ListView.onRemove: animateRemoval()
             onClicked: {
                 pageStack.push(Qt.resolvedUrl(name + "Page.qml"))
             }
@@ -77,43 +73,7 @@ Page {
                 x: Theme.paddingLarge
                 text: name
                 anchors.verticalCenter: parent.verticalCenter
-                font.capitalization: Font.Capitalize
-                color: defaultListItem.highlighted ? Theme.highlightColor : Theme.primaryColor
             }
         }
-
-        header: PageHeader { title: "Main Menu" }
-
-        ViewPlaceholder {
-            enabled: ourlistView.count == 0
-            text: "No content"
-            hintText: "Pull down to add content"
-        }
-
-        PullDownMenu {
-            id: pullDownMenu
-            MenuItem {
-                text: "Jump to the end"
-                onClicked: ourlistView.scrollToBottom()
-            }
-            MenuItem {
-                text: "Clear"
-                visible: ourlistView.count
-                onClicked: clearRemorse.execute("Clearing", function() { listModel.clear() } )
-            }
-            MenuItem {
-                text: "Add Items"
-                visible: !ourlistView.count
-                onClicked: root.addItems()
-            }
-            MenuItem {
-                text: "Toggle busy menu"
-                onClicked: pullDownMenu.busy = !pullDownMenu.busy
-            }
-            MenuLabel {
-                text: "Quick menu"
-            }
-        }
-        VerticalScrollDecorator {}
     }
 }

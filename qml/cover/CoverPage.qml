@@ -35,7 +35,7 @@ CoverBackground {
     Label {
         id: label
         anchors.centerIn: parent
-        text: "JollaCC"
+        text: "Kinnostive"
     }
 
     CoverActionList {
