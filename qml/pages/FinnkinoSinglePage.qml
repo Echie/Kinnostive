@@ -31,9 +31,7 @@ Page {
 
         onStatusChanged: {
 
-
             if (status === XmlListModel.Ready) {
-
 
                 for(var index = 0; index < count;index++) {
                     var newShowstart = get(index).Showstart;
@@ -48,29 +46,20 @@ Page {
 
                     var theatreArray = newTheatre.split(',');
 
-
                     parsedEvents.append({"Showstart":timeString,"Theatre":theatreArray[0]});
 
                 }
-
 
                 if(parsedEvents.count===0){
 
                     parsedEvents.append({"Showstart":'No showings',"Theatre":''});
 
                 }
-
-
             }
-
-
         }
-
-
-
     }
-    ListModel{id: parsedEvents}
 
+    ListModel{id: parsedEvents}
 
     XmlListModel {
         id: eventData
@@ -84,34 +73,15 @@ Page {
         function printMessageInsideSingle() {
             console.log()
         }
-
-
     }
 
+    // DUS NUT WURK
+    Column {
 
-    SilicaListView {
-
-
-        id: eventListView
-        anchors.fill: parent
-        spacing: Theme.paddingLarge
-        model: parsedEvents
-
-
-        delegate: ListItem {
-
-
-
-            Row {
-
-                Column {
-                    Label {
-
-                        text: model.Showstart+'          '+model.Theatre
-
-                    }
-                }
-            }
+        Label {
+            text: eventData.get(0).Title
+            x: Theme.paddingLarge
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 
@@ -138,6 +108,24 @@ Page {
             }
         }
 
+        header: PageHeader { title: "Film" }
+        id: eventListView
+        anchors.fill: parent
+        model: parsedEvents
+        VerticalScrollDecorator {}
+
+        delegate: ListItem {
+
+            Label {
+                x: Theme.paddingLarge
+                text: model.Showstart+'          '+model.Theatre
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+    }
+
+    SilicaListView {
+
         id: scheduleListView
         anchors.fill: parent
         spacing: Theme.paddingLarge
@@ -146,15 +134,8 @@ Page {
 
         delegate: ListItem {
 
-
-
-            Row {
-
-                Column {
-                    Label {
-                        text: model.Title
-                    }
-                }
+            Label {
+                text: model.Title
             }
         }
     }
