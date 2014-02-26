@@ -7,43 +7,45 @@ import QtQuick.XmlListModel 2.0
 
 Page {
 
-
     property string message: ""
 
     id: finnkinoSinglePage
-    Component.onCompleted: events.printShit()
+    Component.onCompleted: singleEvents.printMessageInsideSingle()
 
     XmlListModel {
-        id: events
+        id: singleEvents
         source: message
         query: "/Events/Event"
         namespaceDeclarations: "declare namespace Events = 'http://www.w3.org/2001/XMLSchema';"
         XmlRole {
             name: "Title"
             query: "Title/string()"
-        }/*
-        XmlRole {
-            name: "RatingImageUrl"
-            query: "RatingImageUrl/string()"
-        }*/
-        function printShit() {
+        }
+        function printMessageInsideSingle() {
             console.log(message)
         }
-    }
 
+        onStatusChanged: {
+
+            if (status === XmlListModel.Ready) {
+                console.log("inside onStatusChanged")
+                console.log(get(0).Title)
+            }
+        }
+    }
     SilicaListView {
+
         anchors.fill: parent
         spacing: Theme.paddingLarge
-        model: events
+        model: singleEvents
 
         delegate: ListItem {
+
+            onClicked: {
+                console.log(model.Title)
+            }
+
             Row {
-                /*
-                Image {
-                    height: Theme.itemSizeLarge
-                    width: Theme.itemSizeLarge
-                    source: "https://media.finnkino.fi/images/rating_large_16.png"
-                }*/
 
                 Column {
                     Label {

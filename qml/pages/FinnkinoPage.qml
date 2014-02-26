@@ -55,7 +55,7 @@ Page {
         width: searchPage.width
 
         PageHeader {
-            title: "Countries"
+            title: "Cities"
         }
 
         SearchField {

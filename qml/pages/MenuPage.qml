@@ -64,7 +64,7 @@ Page {
 
         delegate: ListItem {
             id: defaultListItem
-            menu: contextMenuComponent
+            //menu: contextMenuComponent
             function remove() {
                 remorseAction("Deleting", function() { listModel.remove(index) })
             }
