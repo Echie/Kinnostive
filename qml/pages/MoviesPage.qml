@@ -40,13 +40,14 @@ import QtQuick.XmlListModel 2.0
 Page {
     id: moviePage
     property string searchString
+    property string message: ""
 
     onSearchStringChanged: updateFilmList()
     //Component.onCompleted: updateFilmList()
 
     XmlListModel {
         id: events
-        source: "http://www.finnkino.fi/xml/Events/"
+        source: message//"http://www.finnkino.fi/xml/Events/"
         query: "/Events/Event"
         namespaceDeclarations: "declare namespace Events = 'http://www.w3.org/2001/XMLSchema';"
         XmlRole {
@@ -65,6 +66,8 @@ Page {
         onStatusChanged: {
 
             if (status === XmlListModel.Ready) {
+                console.log("inside MoviesPage:")
+                console.log(message)
 
                 for(var index = 0; index < count;index++) {
                     var newTitle = get(index).Title;
