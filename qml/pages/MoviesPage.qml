@@ -182,6 +182,7 @@ Page {
                                                    : (highlighted ? Theme.highlightColor : Theme.primaryColor)
                     textFormat: Text.StyledText
                     text: Theme.highlightText(model.title, searchString, Theme.highlightColor)
+                    font { pixelSize: Theme.fontSizeLarge }
                 }
             }
             VerticalScrollDecorator {}
