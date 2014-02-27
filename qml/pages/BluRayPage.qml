@@ -4,9 +4,6 @@ import QtQuick.XmlListModel 2.0
 
 Page {
     id: searchPage
-    property string searchString
-    property bool keepSearchFieldFocus
-
 
     Component.onCompleted: parse()
 
