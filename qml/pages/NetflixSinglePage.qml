@@ -38,10 +38,14 @@ Page {
         onStatusChanged: {
 
             if (status === XmlListModel.Ready) {
+                var tempPoster = get(0).poster
+                if(tempPoster === "N/A"){
+                    tempPoster="noposter.png"
+                }
                 titleLabel.text = get(0).title
                 ratingLabel.text = get(0).imdbRating
                 runtimeLabel.text ="Runtime: " + get(0).runtime
-                poster.source = get(0).poster
+                poster.source = tempPoster
                 synopsisLabel.text = get(0).plot
 
             }
