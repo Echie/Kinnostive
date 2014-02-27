@@ -53,6 +53,7 @@ Page {
                 x: Theme.paddingLarge
                 text: model.Title
                 anchors.verticalCenter: parent.verticalCenter
+                font { pixelSize: Theme.fontSizeLarge }
             }
         }
     }

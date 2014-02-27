@@ -42,7 +42,7 @@ CoverBackground {
         id: coverAction
 
         CoverAction {
-            iconSource: "image://theme/icon-cover-next"
+            iconSource: "Finnkino_icon.png"
             onTriggered: {
                 pageStack.clear()
                 pageStack.push(Qt.resolvedUrl("../pages/MenuPage.qml"))
@@ -53,7 +53,7 @@ CoverBackground {
         }
 
         CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
+            iconSource: "Netflix_Icon.png"
             onTriggered: {
                 pageStack.clear()
                 pageStack.push(Qt.resolvedUrl("../pages/MenuPage.qml"))

@@ -35,7 +35,7 @@ import "pages"
 ApplicationWindow
 {
     initialPage: Component { MenuPage { } }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    cover: Qt.resolvedUrl("pages/CoverPage.qml")
 }
 
 
