@@ -70,7 +70,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("Finnkinopage.qml"))
-                    console.log("Clicked pulldown Finnkino")
                 }
             }
             MenuItem {
@@ -79,7 +78,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("NetflixPage.qml"))
-                    console.log("Clicked pulldown Netflix")
                 }
             }
             MenuItem {
@@ -88,7 +86,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("BluRayPage.qml"))
-                    console.log("Clicked pulldown Bluray")
                 }
             }
         }
@@ -171,70 +168,4 @@ Page {
             }
         }
     }
-
-
-    /*
-    SilicaListView {
-
-        PullDownMenu {
-            MenuItem {
-                text: "Finnkino"
-                onClicked: {
-                    pageStack.clear()
-                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
-                    pageStack.push(Qt.resolvedUrl("FinnkinoPage.qml"))
-                    console.log("Clicked pulldown Finnkino")
-                }
-            }
-            MenuItem {
-                text: "Netflix"
-                onClicked: {
-                    pageStack.clear()
-                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
-                    pageStack.push(Qt.resolvedUrl("NetflixPage.qml"))
-                    console.log("Clicked pulldown Netflix")
-                }
-            }
-            MenuItem {
-                text: "Bluray"
-                onClicked: {
-                    pageStack.clear()
-                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
-                    pageStack.push(Qt.resolvedUrl("BluRayPage.qml"))
-                    console.log("Clicked pulldown Bluray")
-                }
-            }
-        }
-
-        anchors.fill: parent
-        spacing: Theme.paddingLarge
-        model: singleEvents
-
-        delegate: ListItem {
-
-            Row {
-
-                Column {
-                    Label {
-                        text: model.title
-                    }
-                    Label {
-                        text: model.imdbRating
-                    }
-                    Label {
-                        text: model.runtime
-                    }
-                    Image {
-                        height: Theme.itemSizeLarge
-                        width: Theme.itemSizeLarge
-                        source: model.poster
-                    }
-                    Label {
-                        text: model.plot
-                    }
-                }
-            }
-        }
-    }
-    */
 }

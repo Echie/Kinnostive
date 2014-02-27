@@ -41,56 +41,6 @@ Page {
 
     id: page
     PageHeader { title: "Main Menu" }
-    /*
-    PageHeader { title: "Main Menu" }
-
-    Column {
-        anchors.fill: parent
-        anchors.topMargin: 75
-
-        Row {
-            Image {
-                id:finnkinoImage
-                height: Theme.itemSizeLarge
-                width: Theme.itemSizeLarge
-                source: "Finnkino_icon.png"
-            }
-            Label {
-                text: "Finnkino"
-                x: Theme.paddingLarge
-            }
-        }
-
-        Row {
-            Image {
-                id:netflixImage
-                height: Theme.itemSizeLarge
-                width: Theme.itemSizeLarge
-                source: "Netflix_Icon.png"
-            }
-            Label {
-                text: "Netflix"
-                x: Theme.paddingLarge
-
-            }
-        }
-
-        Row {
-            Image {
-                id:blurayImage
-                height: Theme.itemSizeLarge
-                width: Theme.itemSizeLarge
-                source: "BluRay_Icon.png"
-            }
-            Label {
-                text: "Bluray"
-                x: Theme.paddingLarge
-            }
-        }
-    }
-}
-
-*/
 
     SilicaListView {
 

@@ -8,6 +8,8 @@ Page {
     Component.onCompleted: parse()
 
     BusyIndicator{
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
         id: busyInd
         running: true
     }
@@ -26,7 +28,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("FinnkinoPage.qml"))
-                    console.log("Clicked pulldown Finnkino")
                 }
             }
             MenuItem {
@@ -35,7 +36,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("NetflixPage.qml"))
-                    console.log("Clicked pulldown Netflix")
                 }
             }
         }
@@ -54,6 +54,8 @@ Page {
                 text: model.Title
                 anchors.verticalCenter: parent.verticalCenter
                 font { pixelSize: Theme.fontSizeLarge }
+                width: parent.width - 75
+                wrapMode: Text.WordWrap
             }
         }
     }
