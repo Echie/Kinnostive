@@ -40,24 +40,76 @@ import Sailfish.Silica 1.0
 Page {
 
     id: page
+    PageHeader { title: "Main Menu" }
+    /*
+    PageHeader { title: "Main Menu" }
 
-    RemorsePopup {
-        id: clearRemorse
+    Column {
+        anchors.fill: parent
+        anchors.topMargin: 75
+
+        Row {
+            Image {
+                id:finnkinoImage
+                height: Theme.itemSizeLarge
+                width: Theme.itemSizeLarge
+                source: "Finnkino_icon.png"
+            }
+            Label {
+                text: "Finnkino"
+                x: Theme.paddingLarge
+            }
+        }
+
+        Row {
+            Image {
+                id:netflixImage
+                height: Theme.itemSizeLarge
+                width: Theme.itemSizeLarge
+                source: "Netflix_Icon.png"
+            }
+            Label {
+                text: "Netflix"
+                x: Theme.paddingLarge
+
+            }
+        }
+
+        Row {
+            Image {
+                id:blurayImage
+                height: Theme.itemSizeLarge
+                width: Theme.itemSizeLarge
+                source: "BluRay_Icon.png"
+            }
+            Label {
+                text: "Bluray"
+                x: Theme.paddingLarge
+            }
+        }
     }
+}
+
+*/
 
     SilicaListView {
 
         id: ourlistView
-        header: PageHeader { title: "Main Menu" }
         anchors.fill: parent
+        anchors.leftMargin: 100
+        anchors.topMargin: 200
+        spacing: 100
         model: ListModel {
             ListElement {
+                path: "Finnkino_icon.png"
                 name: "Finnkino"
             }
             ListElement {
+                path: "Netflix_Icon.png"
                 name: "Netflix"
             }
             ListElement {
+                path: "BluRay_Icon.png"
                 name: "BluRay"
             }
 
@@ -69,10 +121,21 @@ Page {
                 pageStack.push(Qt.resolvedUrl(name + "Page.qml"))
             }
 
-            Label {
-                x: Theme.paddingLarge
-                text: name
-                anchors.verticalCenter: parent.verticalCenter
+            Row {
+                spacing: 20
+                Image {
+                    height: Theme.itemSizeLarge
+                    width: Theme.itemSizeLarge
+                    source: path
+
+                }
+                Label {
+                    x: Theme.paddingLarge
+                    text: name
+                    anchors.verticalCenter: parent.verticalCenter
+                    font { pixelSize: Theme.fontSizeExtraLarge }
+
+                }
             }
         }
     }

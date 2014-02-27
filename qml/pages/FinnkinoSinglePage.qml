@@ -132,6 +132,14 @@ Page {
             anchors.top: parent.top
             anchors.topMargin: 75
 
+            Label {
+                width: parent.width
+                id:filmLabel
+                text: ""
+                x: Theme.paddingLarge
+                font { pixelSize: Theme.fontSizeExtraLarge }
+            }
+
             Row {
                 spacing: 2
                 // first label to move image from left corner
@@ -147,20 +155,15 @@ Page {
                         id:lengthLabel
                         text: ""
                         x: Theme.paddingLarge
+                        font { pixelSize: Theme.fontSizeLarge }
                     }
                     Label {
                         id:genreLabel
                         text: ""
                         x: Theme.paddingLarge
+                        font { pixelSize: Theme.fontSizeLarge }
                     }
                 }
-            }
-
-            Label {
-                width: parent.width
-                id:filmLabel
-                text: ""
-                x: Theme.paddingLarge
             }
 
             Label {
@@ -168,7 +171,7 @@ Page {
                 id:synopsisLabel
                 text: ""
                 x: Theme.paddingSmall
-                font.pixelSize: Theme.fontSizeExtraSmall
+                font.pixelSize: Theme.fontSizeSmall
                 wrapMode: Text.WordWrap
                 maximumLineCount: 4
                 truncationMode: TruncationMode.Fade
