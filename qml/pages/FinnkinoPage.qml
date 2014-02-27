@@ -122,6 +122,7 @@ Page {
                 x: Theme.paddingLarge
                 text: Name
                 anchors.verticalCenter: parent.verticalCenter
+                font { pixelSize: Theme.fontSizeExtraLarge }
             }
         }
         VerticalScrollDecorator {}

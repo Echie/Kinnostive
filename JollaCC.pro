@@ -13,15 +13,16 @@ CONFIG += sailfishapp
 SOURCES += src/JollaCC.cpp
 
 OTHER_FILES += qml/JollaCC.qml \
-    qml/cover/CoverPage.qml \
     rpm/JollaCC.spec \
     rpm/JollaCC.yaml \
     JollaCC.desktop \
+    qml/pages/CoverPage.qml \
     qml/pages/MenuPage.qml \
     qml/pages/MoviesPage.qml \
     qml/pages/FinnkinoPage.qml \
     qml/pages/BluRayPage.qml \
     qml/pages/FinnkinoSinglePage.qml \
     qml/pages/NetflixPage.qml \
-    qml/pages/NetflixSinglePage.qml
+    qml/pages/NetflixSinglePage.qml \
+    qml/pages/CoverPage.qml
 

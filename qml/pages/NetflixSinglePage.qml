@@ -43,7 +43,7 @@ Page {
                     tempPoster="noposter.png"
                 }
                 titleLabel.text = get(0).title
-                ratingLabel.text = get(0).imdbRating
+                ratingLabel.text = "IMDB: " + get(0).imdbRating
                 runtimeLabel.text ="Runtime: " + get(0).runtime
                 poster.source = tempPoster
                 synopsisLabel.text = get(0).plot
@@ -98,6 +98,17 @@ Page {
             anchors.top:parent.top
             anchors.topMargin: 75
 
+            Label {
+                width: parent.width
+                id:titleLabel
+                text: ""
+                x: Theme.paddingLarge
+                font { pixelSize: Theme.fontSizeExtraLarge }
+                wrapMode: Text.WordWrap
+                maximumLineCount: 4
+                truncationMode: TruncationMode.Fade
+            }
+
             Row {
                 spacing: 2
 
@@ -107,31 +118,29 @@ Page {
                     width: Theme.itemSizeLarge
                     source: ""
                 }
-                Column {
 
-                    Label {
-                        id:titleLabel
-                        text: ""
-                        x: Theme.paddingLarge
-                    }
+                Column {
                     Label {
                         id:ratingLabel
                         text: ""
                         x: Theme.paddingLarge
+                        font { pixelSize: Theme.fontSizeLarge }
                     }
                     Label {
                         id:runtimeLabel
                         text: ""
                         x: Theme.paddingLarge
+                        font { pixelSize: Theme.fontSizeLarge }
                     }
                 }
             }
+
             Label {
                 width: parent.width
                 id:synopsisLabel
                 text: ""
                 x: Theme.paddingSmall
-                font.pixelSize: Theme.fontSizeExtraSmall
+                font.pixelSize: Theme.fontSizeMedium
                 wrapMode: Text.WordWrap
                 maximumLineCount: 20
                 truncationMode: TruncationMode.Fade
