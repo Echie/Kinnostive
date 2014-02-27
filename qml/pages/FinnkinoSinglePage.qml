@@ -4,14 +4,11 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtQuick.XmlListModel 2.0
 
-
 Page {
-
     property string areaID: ""
     property string eventID: ""
 
     id: finnkinoSinglePage
-    //Component.onCompleted: singleEvents.printMessageInsideSingle()
 
     XmlListModel {
         id: allshows
@@ -59,8 +56,6 @@ Page {
         }
     }
 
-    ListModel{id: parsedEvents}
-
     XmlListModel {
         id: eventData
         source:'http://www.finnkino.fi/xml/Events/?includeVideos=false&eventID='+eventID
@@ -70,23 +65,31 @@ Page {
             name: "Title"
             query: "Title/string()"
         }
-        function printMessageInsideSingle() {
-            console.log()
+        XmlRole {
+            name: "Synopsis"
+            query: "ShortSynopsis/string()"
+        }
+        XmlRole {
+            name: "Poster"
+            query: "Images/EventMicroImagePortrait/string()"
+        }
+
+        onStatusChanged: {
+
+            // Kiitos Ramsu
+            if (status === XmlListModel.Ready) {
+                filmLabel.text = get(0).Title
+                synopsisLabel.text = get(0).Synopsis
+                moviePoster.source = get(0).Poster
+            }
         }
     }
 
-    // DUS NUT WURK
-    Column {
+    ListModel{id: parsedEvents}
 
-        Label {
-            text: eventData.get(0).Title
-            x: Theme.paddingLarge
-            anchors.verticalCenter: parent.verticalCenter
-        }
-    }
+    SilicaFlickable {
 
-    SilicaListView {
-
+        anchors.fill:parent
         PullDownMenu {
             MenuItem {
                 text: "Netflix"
@@ -108,36 +111,62 @@ Page {
             }
         }
 
-        header: PageHeader { title: "Film" }
-        id: eventListView
-        anchors.fill: parent
-        model: parsedEvents
-        VerticalScrollDecorator {}
+        PageHeader {
+            title: "Film"
+        }
 
-        delegate: ListItem {
+        Column {
+            id:labelContainer
+            spacing:3
+            width:parent.width
+            anchors.top: parent.top
+            anchors.topMargin: 75
+            Image {
+                id:moviePoster
+                height: Theme.itemSizeLarge
+                width: Theme.itemSizeLarge
+                source: ""
+            }
+            Label {
+                width: parent.width
+                id:filmLabel
+                text: ""
+                x: Theme.paddingLarge
+            }
 
             Label {
+                width: parent.width
+                id:synopsisLabel
+                text: ""
                 x: Theme.paddingLarge
-                text: model.Showstart+'          '+model.Theatre
-                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: Theme.fontSizeExtraSmall
+                wrapMode: Text.WordWrap
+                maximumLineCount: 3
+                truncationMode: TruncationMode.Fade
+
             }
         }
-    }
 
-    SilicaListView {
+        SilicaListView {
 
-        id: scheduleListView
-        anchors.fill: parent
-        spacing: Theme.paddingLarge
-        model: eventData
+            anchors.topMargin: 70
+            anchors.top: labelContainer.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
 
+            id: eventListView
+            model: parsedEvents
+            VerticalScrollDecorator {}
 
-        delegate: ListItem {
+            delegate: ListItem {
 
-            Label {
-                text: model.Title
+                Label {
+                    x: Theme.paddingLarge
+                    text: model.Showstart+'          '+model.Theatre
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
         }
     }
 }
-

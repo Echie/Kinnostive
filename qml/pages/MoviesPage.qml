@@ -40,17 +40,14 @@ import QtQuick.XmlListModel 2.0
 
 
 Page {
-
+    property string message: ""
+    property string searchString
+    onSearchStringChanged: updateFilmList()
     id: moviePage
 
     PageHeader {
         title:"Choose a movie"
     }
-
-    property string searchString
-    property string message: ""
-
-    onSearchStringChanged: updateFilmList()
 
     XmlListModel {
         id: events
@@ -113,17 +110,6 @@ Page {
         }*/
     }
 
-    Column {
-        id: headerContainer
-
-        width: cityPage.width
-        anchors.rightMargin: 50
-
-//        PageHeader {
-//            title:"Choose a movie"
-//        }
-    }
-
     SearchField {
         id: searchField
         width: parent.width
@@ -139,21 +125,14 @@ Page {
     }
 
     SilicaListView {
-        //anchors.fill: parent
         anchors.topMargin: 30
         anchors.leftMargin: -50
         anchors.top: searchField.bottom
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        spacing: Theme.paddingLarge
+        //spacing: Theme.paddingLarge
         model: filmListModel
-        header:  Item {
-            id: header
-            width: headerContainer.width
-            height: headerContainer.height
-            Component.onCompleted: headerContainer.parent = header
-        }
 
         delegate: BackgroundItem {
             id:backgroundItem
