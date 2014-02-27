@@ -23,6 +23,11 @@ Page {
             query: "@runtime/string()"
         }
         XmlRole {
+            name: "genre"
+            query: "@genre/string()"
+        }
+
+        XmlRole {
             name: "plot"
             query: "@plot/string()"
         }
@@ -45,6 +50,7 @@ Page {
                 titleLabel.text = get(0).title
                 ratingLabel.text = "IMDB: " + get(0).imdbRating
                 runtimeLabel.text ="Runtime: " + get(0).runtime
+                genreLabel.text = "Genre: " + get(0).genre
                 poster.source = tempPoster
                 synopsisLabel.text = get(0).plot
 
@@ -111,11 +117,12 @@ Page {
 
             Row {
                 spacing: 2
-
+                // first label to move image from left corner
+                Label {text:"   "}
                 Image {
                     id:poster
-                    height: Theme.itemSizeLarge
-                    width: Theme.itemSizeLarge
+                    height: Theme.itemSizeExtraLarge + 150
+                    width: Theme.itemSizeExtraLarge + 50
                     source: ""
                 }
 
@@ -132,7 +139,23 @@ Page {
                         x: Theme.paddingLarge
                         font { pixelSize: Theme.fontSizeLarge }
                     }
+                    Label {
+                        id:genreLabel
+                        text: ""
+                        x: Theme.paddingLarge
+                        width: 300
+                        font { pixelSize: Theme.fontSizeLarge }
+                        wrapMode: Text.WordWrap
+                        maximumLineCount: 3
+                        truncationMode: TruncationMode.Fade
+
+                    }
                 }
+            }
+
+            // Pädding
+            Label {
+                text:" "
             }
 
             Label {

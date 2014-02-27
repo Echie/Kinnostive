@@ -71,7 +71,7 @@ Page {
         }
         XmlRole {
             name: "Poster"
-            query: "Images/EventMicroImagePortrait/string()"
+            query: "Images/EventSmallImagePortrait/string()"
         }
         XmlRole {
             name: "Length"
@@ -138,6 +138,10 @@ Page {
                 text: ""
                 x: Theme.paddingLarge
                 font { pixelSize: Theme.fontSizeExtraLarge }
+                wrapMode: Text.WordWrap
+                maximumLineCount: 3
+                truncationMode: TruncationMode.Fade
+
             }
 
             Row {
@@ -146,8 +150,8 @@ Page {
                 Label {text:"   "}
                 Image {
                     id:moviePoster
-                    height: Theme.itemSizeLarge
-                    width: Theme.itemSizeLarge
+                    height: Theme.itemSizeExtraLarge + 150
+                    width: Theme.itemSizeExtraLarge + 50
                     source: ""
                 }
                 Column {
@@ -161,9 +165,19 @@ Page {
                         id:genreLabel
                         text: ""
                         x: Theme.paddingLarge
+                        width:300
                         font { pixelSize: Theme.fontSizeLarge }
+                        wrapMode: Text.WordWrap
+                        maximumLineCount: 2
+                        truncationMode: TruncationMode.Fade
+
                     }
                 }
+            }
+
+            //Pädding
+            Label {
+                text: " "
             }
 
             Label {

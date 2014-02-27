@@ -32,10 +32,11 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-    Label {
-        id: label
+    CoverPlaceholder {
         anchors.centerIn: parent
-        text: "Kinnostive"
+        icon.source: "Kinnostive_logo.png"
+        height: Theme.itemSizeLarge
+        width: Theme.itemSizeLarge
     }
 
     CoverActionList {
@@ -62,5 +63,4 @@ CoverBackground {
         }
     }
 }
-
 
