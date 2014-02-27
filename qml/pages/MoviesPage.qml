@@ -67,9 +67,6 @@ Page {
         onStatusChanged: {
 
             if (status === XmlListModel.Ready) {
-                // console.log("inside MoviesPage:")
-                // console.log(message)
-
                 for(var index = 0; index < count;index++) {
                     var newTitle = get(index).Title;
                     var newID = get(index).ID;
@@ -100,11 +97,6 @@ Page {
                 filmListModel.append({"title":newTitle,"id":newID})
             }
         }
-
-        /* DEBUG
-        for (var ind = 0; ind <filmListModel.count; ind++) {
-            console.log(filmListModel.get(ind).title,filmListModel.get(ind).id)
-        }*/
     }
 
     SilicaFlickable {
@@ -122,7 +114,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("NetflixPage.qml"))
-                    console.log("Clicked pulldown Netflix")
                 }
             }
             MenuItem {
@@ -131,7 +122,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("BluRayPage.qml"))
-                    console.log("Clicked pulldown Bluray")
                 }
             }
         }
@@ -183,6 +173,8 @@ Page {
                     textFormat: Text.StyledText
                     text: Theme.highlightText(model.title, searchString, Theme.highlightColor)
                     font { pixelSize: Theme.fontSizeLarge }
+                    width: parent.width - 100
+                    wrapMode: Text.WordWrap
                 }
             }
             VerticalScrollDecorator {}

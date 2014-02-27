@@ -107,7 +107,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("NetflixPage.qml"))
-                    console.log("Clicked pulldown Netflix")
                 }
             }
             MenuItem {
@@ -116,7 +115,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("BluRayPage.qml"))
-                    console.log("Clicked pulldown Bluray")
                 }
             }
         }

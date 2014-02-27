@@ -23,7 +23,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("FinnkinoPage.qml"))
-                    console.log("Clicked pulldown Finnkino")
                 }
             }
             MenuItem {
@@ -32,7 +31,6 @@ Page {
                     pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                     pageStack.push(Qt.resolvedUrl("BluRayPage.qml"))
-                    console.log("Clicked pulldown Bluray")
                 }
             }
         }
@@ -52,6 +50,8 @@ Page {
                 text: model.title
                 anchors.verticalCenter: parent.verticalCenter
                 font { pixelSize: Theme.fontSizeLarge }
+                width: parent.width - 75
+                wrapMode: Text.WordWrap
             }
         }
     }
