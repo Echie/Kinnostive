@@ -7,11 +7,17 @@ Page {
 
     Component.onCompleted: parse()
 
+    BusyIndicator{
+        id: busyInd
+        running: true
+    }
+
     ListModel {
         id: bluray
     }
 
     SilicaListView {
+
 
         PullDownMenu {
             MenuItem {
@@ -66,6 +72,7 @@ Page {
             }
         }
         xhr.send();
+        busyInd.running=false
     }
 
     function loaded(jsonObject){
