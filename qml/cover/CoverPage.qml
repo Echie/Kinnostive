@@ -43,10 +43,22 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next"
+            onTriggered: {
+                pageStack.clear()
+                pageStack.push(Qt.resolvedUrl("../pages/MenuPage.qml"))
+                pageStack.navigateForward(PageStackAction.Animated)
+                pageStack.push(Qt.resolvedUrl("../pages/FinnkinoPage.qml"))
+                pageStack.navigateForward(PageStackAction.Animated)
+            }
         }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-pause"
+            onTriggered: {
+                pageStack.clear()
+                pageStack.push(Qt.resolvedUrl("../pages/MenuPage.qml"))
+                pageStack.push(Qt.resolvedUrl("../pages/NetflixPage.qml"))
+            }
         }
     }
 }

@@ -73,6 +73,14 @@ Page {
             name: "Poster"
             query: "Images/EventMicroImagePortrait/string()"
         }
+        XmlRole {
+            name: "Length"
+            query: "LengthInMinutes/string()"
+        }
+        XmlRole {
+            name: "Genre"
+            query: "Genres/string()"
+        }
 
         onStatusChanged: {
 
@@ -81,6 +89,8 @@ Page {
                 filmLabel.text = get(0).Title
                 synopsisLabel.text = get(0).Synopsis
                 moviePoster.source = get(0).Poster
+                lengthLabel.text = "Runtime: " + get(0).Length + " min"
+                genreLabel.text = "Genre: " + get(0).Genre
             }
         }
     }
@@ -117,16 +127,35 @@ Page {
 
         Column {
             id:labelContainer
-            spacing:3
+            spacing:5
             width:parent.width
             anchors.top: parent.top
             anchors.topMargin: 75
-            Image {
-                id:moviePoster
-                height: Theme.itemSizeLarge
-                width: Theme.itemSizeLarge
-                source: ""
+
+            Row {
+                spacing: 2
+                // first label to move image from left corner
+                Label {text:"   "}
+                Image {
+                    id:moviePoster
+                    height: Theme.itemSizeLarge
+                    width: Theme.itemSizeLarge
+                    source: ""
+                }
+                Column {
+                    Label {
+                        id:lengthLabel
+                        text: ""
+                        x: Theme.paddingLarge
+                    }
+                    Label {
+                        id:genreLabel
+                        text: ""
+                        x: Theme.paddingLarge
+                    }
+                }
             }
+
             Label {
                 width: parent.width
                 id:filmLabel
@@ -138,10 +167,10 @@ Page {
                 width: parent.width
                 id:synopsisLabel
                 text: ""
-                x: Theme.paddingLarge
+                x: Theme.paddingSmall
                 font.pixelSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
-                maximumLineCount: 3
+                maximumLineCount: 4
                 truncationMode: TruncationMode.Fade
 
             }
@@ -149,11 +178,12 @@ Page {
 
         SilicaListView {
 
-            anchors.topMargin: 70
+            anchors.topMargin: 50
             anchors.top: labelContainer.bottom
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
+            spacing: Theme.paddingSmall
 
             id: eventListView
             model: parsedEvents

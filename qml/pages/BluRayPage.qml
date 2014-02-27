@@ -55,7 +55,7 @@ Page {
     function parse() {
         bluray.clear();
         var xhr = new XMLHttpRequest();
-        xhr.open('GET','http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=93u36yvaapta4kaur425e8nq&page_limit=2',true);
+        xhr.open('GET','http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=93u36yvaapta4kaur425e8nq&page_limit=25',true);
         xhr.onreadystatechange = function() {
             if ( xhr.readyState == xhr.DONE) {
                 if ( xhr.status == 200) {
