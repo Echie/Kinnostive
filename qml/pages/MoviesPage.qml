@@ -45,9 +45,6 @@ Page {
     onSearchStringChanged: updateFilmList()
     id: moviePage
 
-    PageHeader {
-        title:"Choose a movie"
-    }
 
     XmlListModel {
         id: events
@@ -70,8 +67,8 @@ Page {
         onStatusChanged: {
 
             if (status === XmlListModel.Ready) {
-               // console.log("inside MoviesPage:")
-               // console.log(message)
+                // console.log("inside MoviesPage:")
+                // console.log(message)
 
                 for(var index = 0; index < count;index++) {
                     var newTitle = get(index).Title;
@@ -110,54 +107,84 @@ Page {
         }*/
     }
 
-    SearchField {
-        id: searchField
-        width: parent.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 60
+    SilicaFlickable {
 
-        Binding {
-            target: moviePage
-            property: "searchString"
-            value: searchField.text.toLowerCase().trim()
+        anchors.fill:parent
+
+        PageHeader {
+            title:"Choose a movie"
         }
-    }
 
-    SilicaListView {
-        anchors.topMargin: 30
-        anchors.leftMargin: -50
-        anchors.top: searchField.bottom
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        //spacing: Theme.paddingLarge
-        model: filmListModel
-
-        delegate: BackgroundItem {
-            id:backgroundItem
-
-            onClicked: {
-                pageStack.push(Qt.resolvedUrl("FinnkinoSinglePage.qml"),
-                               {areaID:message, eventID:model.id})
+        PullDownMenu {
+            MenuItem {
+                text: "Netflix"
+                onClicked: {
+                    pageStack.clear()
+                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
+                    pageStack.push(Qt.resolvedUrl("NetflixPage.qml"))
+                    console.log("Clicked pulldown Netflix")
+                }
             }
-
-            ListView.onAdd: AddAnimation {
-                target: backgroundItem
-            }
-            ListView.onRemove: RemoveAnimation {
-                target: backgroundItem
-            }
-
-            Label {
-                x: searchField.textLeftMargin
-                anchors.verticalCenter: parent.verticalCenter
-                color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
-                                               : (highlighted ? Theme.highlightColor : Theme.primaryColor)
-                textFormat: Text.StyledText
-                text: Theme.highlightText(model.title, searchString, Theme.highlightColor)
+            MenuItem {
+                text: "Bluray"
+                onClicked: {
+                    pageStack.clear()
+                    pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
+                    pageStack.push(Qt.resolvedUrl("BluRayPage.qml"))
+                    console.log("Clicked pulldown Bluray")
+                }
             }
         }
-        VerticalScrollDecorator {}
+
+        SearchField {
+            id: searchField
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: 60
+
+            Binding {
+                target: moviePage
+                property: "searchString"
+                value: searchField.text.toLowerCase().trim()
+            }
+        }
+
+        SilicaListView {
+
+            anchors.topMargin: 15
+            anchors.leftMargin: -50
+            anchors.top: searchField.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            model: filmListModel
+
+            delegate: BackgroundItem {
+                id:backgroundItem
+
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("FinnkinoSinglePage.qml"),
+                                   {areaID:message, eventID:model.id})
+                }
+
+                ListView.onAdd: AddAnimation {
+                    target: backgroundItem
+                }
+                ListView.onRemove: RemoveAnimation {
+                    target: backgroundItem
+                }
+
+                Label {
+                    x: searchField.textLeftMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
+                                                   : (highlighted ? Theme.highlightColor : Theme.primaryColor)
+                    textFormat: Text.StyledText
+                    text: Theme.highlightText(model.title, searchString, Theme.highlightColor)
+                }
+            }
+            VerticalScrollDecorator {}
+        }
     }
 }
