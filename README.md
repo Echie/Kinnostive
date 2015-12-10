@@ -4,6 +4,7 @@ Kinnostive is a Jolla Open Data Codecamp project at Lappeenranta University of T
 Kinnostive is a movie app, where you can see the newest movies shown in Finnkino and Netflix, or released as DVD.
 Data is provided by Finnkino, Netflix and Rotten Tomatoes.
 
+# Screenshots
 ![](img/main.png)
 ![](img/cities.png)
 ![](img/movies.png)
